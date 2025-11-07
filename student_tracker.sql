@@ -40,7 +40,7 @@ CREATE TABLE Students (
     student_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     dob DATE,
-    gender ENUM('M','F','O') DEFAULT 'O',
+    gender ENUM('M','F','O'),
     email VARCHAR(150),
     phone_number VARCHAR(30),
     address TEXT,
@@ -66,7 +66,7 @@ CREATE TABLE Attendance (
     student_id INT NOT NULL,
     course_id INT NOT NULL,
     attendance_date DATE NOT NULL,
-    status ENUM('Present','Absent','Late') NOT NULL DEFAULT 'Present',
+    status ENUM('Present','Absent','Late') NOT NULL,
     CONSTRAINT fk_att_student FOREIGN KEY (student_id) REFERENCES Students(student_id),
     CONSTRAINT fk_att_course FOREIGN KEY (course_id) REFERENCES Courses(course_id)
 );
@@ -203,13 +203,6 @@ WITH attendance_summary AS (
 avg_marks AS (
     SELECT student_id, AVG(marks_obtained) AS avg_marks FROM Grades GROUP BY student_id
 )
-SELECT s.student_id, s.name, a.attendance_percent, m.avg_marks
-FROM Students s
-LEFT JOIN attendance_summary a ON s.student_id = a.student_id
-LEFT JOIN avg_marks m ON s.student_id = m.student_id
-WHERE (a.attendance_percent < 50 OR a.attendance_percent IS NULL) AND (m.avg_marks < 40 OR m.avg_marks IS NULL);
-
--- Students who scored above 90 OR have perfect attendance (attendance_percent = 100)
 SELECT s.student_id, s.name, m.avg_marks, a.attendance_percent
 FROM Students s
 LEFT JOIN avg_marks m ON s.student_id = m.student_id
@@ -282,7 +275,7 @@ FROM Students s
 LEFT JOIN Enrollments e ON s.student_id = e.student_id
 WHERE e.enrollment_id IS NULL;
 
--- RIGHT JOIN: list courses that have no students assigned (MySQL supports RIGHT JOIN)
+-- RIGHT JOIN: list courses that have no students assigned 
 SELECT c.course_id, c.course_name, e.enrollment_id
 FROM Courses c
 RIGHT JOIN Enrollments e ON c.course_id = e.course_id
@@ -343,7 +336,7 @@ SELECT student_id, name, admission_date,
     TIMESTAMPDIFF(YEAR, admission_date, CURDATE()) AS years_since_admission
 FROM Students;
 
--- Format attendance_date as DD-MM-YYYY (MySQL DATE_FORMAT)
+-- Format attendance_date as DD-MM-YYYY 
 SELECT attendance_id, DATE_FORMAT(attendance_date, '%d-%m-%Y') AS att_date_formatted FROM Attendance;
 
 -- ==========================================================
