@@ -8,6 +8,7 @@ This project, Student Performance & Attendance Tracker, is designed to help inst
 It supports CRUD operations, advanced SQL queries, and report generation to provide actionable insights like top-performing students, attendance defaulters, and subject-wise analysis.
 
 📚 Features Implemented
+
 🔹 1. CRUD Operations
 
 Added, updated, and deleted student and faculty records.
