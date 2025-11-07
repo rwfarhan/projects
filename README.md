@@ -1,7 +1,5 @@
 🧮 Student Performance & Attendance Tracker
 
-Project for Red & White Skill Education — MySQL Based Data Management System
-
 🎯 Objective
 
 This project, Student Performance & Attendance Tracker, is designed to help institutions manage student data, attendance, and academic performance using MySQL.
