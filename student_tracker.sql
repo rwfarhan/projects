@@ -177,8 +177,7 @@ ORDER BY avg_marks DESC
 LIMIT 3;
 
 -- Find students with attendance below 75% (requires aggregate)
--- For demonstration, compute attendance percent per student across all recorded attendance
--- NOTE: sample dataset is small; in real use include expected schedule count
+
 SELECT s.student_id, s.name,
     SUM(CASE WHEN a.status='Present' THEN 1 ELSE 0 END) AS present_count,
     COUNT(a.attendance_id) AS total_records,
@@ -255,11 +254,7 @@ FROM Departments d
 LEFT JOIN Students s ON d.department_id = s.department_id
 GROUP BY d.department_id, d.department_name;
 
--- ==========================================================
--- 9. Primary & Foreign Key Relationships (High weight)
--- (Already established by CREATE TABLE constraints)
--- Example: ensure student cannot enroll in same course multiple times (unique constraint on student_id+course_id)
--- Attempt to insert duplicate enrollment will fail due to UNIQUE KEY
+
 
 -- ==========================================================
 -- 10. Joins (High weight) - INNER, LEFT, RIGHT, FULL-like
@@ -282,7 +277,6 @@ RIGHT JOIN Enrollments e ON c.course_id = e.course_id
 WHERE c.course_id IS NULL;
 
 -- FULL OUTER JOIN emulation: students without grades and students with grades
--- MySQL doesn't have FULL OUTER JOIN; emulate using UNION
 SELECT s.student_id, s.name, g.marks_obtained
 FROM Students s
 LEFT JOIN Grades g ON s.student_id = g.student_id
