@@ -1,4 +1,4 @@
-🧮 Student Performance & Attendance Tracker
+
 
 🎯 Objective
 
